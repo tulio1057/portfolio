@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Túlio Barbosa — sites, sistemas e automações</title>
+<meta name="description" content="Monte o sistema do seu negócio e veja na hora uma estimativa de preço e prazo. Túlio Barbosa, desenvolvedor full stack com sistema em produção na SERGAS.">
+<meta property="og:title" content="Me conta o problema. Eu monto o sistema.">
+<meta property="og:description" content="Sites, sistemas web e automações sob medida.">
+<meta property="og:image" content="img/centroaju.png">
+<meta name="theme-color" content="#0d1630">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noite:#0d1630;     /* fundo azul-noite */
+    --noite-2:#15214a;   /* superfícies */
+    --traco:#ffc845;     /* traço das ilustrações e destaques: amarelo-caju */
+    --mar:#2fbfae;       /* preenchimento deslocado: verde-água */
+    --texto:#eaf0ff;
+    --sub:#9fb0d6;
+    --linha:#2a3a6b;
+    --slab:"Zilla Slab", Georgia, serif;
+    --body:"Karla", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--noite);color:var(--texto);font:400 18px/1.65 var(--body)}
+  a{color:var(--traco);text-underline-offset:4px}
+  :focus-visible{outline:2px solid var(--traco);outline-offset:4px}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+  .dot{color:var(--mar)}
+  .hatch{background-image:repeating-linear-gradient(-45deg, color-mix(in srgb,var(--mar) 38%,transparent) 0 2px, transparent 2px 9px)}
+
+  /* topo */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:30px 0}
+  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--texto);font:700 1.1rem var(--slab)}
+  .brand svg{width:40px;height:40px}
+  .top nav{display:flex;align-items:center;gap:28px}
+  .top nav a{color:var(--sub);text-decoration:none;font-weight:500}
+  .top nav a:hover{color:var(--texto)}
+  .top nav a.hire{display:flex;align-items:center;gap:8px;color:var(--texto);font-weight:700}
+  .top nav a.hire svg{width:26px;height:26px}
+
+  /* hero */
+  .hero{text-align:center;padding:24px 0 80px}
+  .stage{position:relative;max-width:720px;margin:0 auto}
+  .stage .band{position:absolute;left:0;right:0;top:34%;height:42%}
+  .stage svg{position:relative;width:min(300px,64vw);height:auto;margin:0 auto;display:block}
+  .hero h1{font:400 clamp(2.4rem,6vw,4.4rem)/1.05 var(--slab);margin:26px 0 18px;letter-spacing:-.01em}
+  .hero h1 b{font-weight:700}
+  .hero .intro{color:var(--sub);max-width:34em;margin:0 auto;font-size:1.12rem}
+  .hero .intro strong{color:var(--texto)}
+
+  /* ilustrações */
+  .ill .fill{fill:var(--mar);transform:translate(6px,6px)}
+  .ill .line{fill:none;stroke:var(--traco);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .ill .solid{fill:var(--traco)}
+
+  /* montador */
+  .builder-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:start;padding:72px 0;border-top:1px solid var(--linha)}
+  h2{font:700 clamp(1.9rem,3.6vw,2.7rem)/1.1 var(--slab);margin:0 0 16px}
+  .builder-wrap .lead{color:var(--sub);margin:0 0 18px;max-width:28em}
+  .builder{border:2px solid var(--traco);padding:24px;background:var(--noite-2);box-shadow:8px 8px 0 color-mix(in srgb,var(--mar) 55%,transparent)}
+  .items{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
+  .items li{border-bottom:1px solid var(--linha)}
+  .items label{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:center;padding:10px 8px;cursor:pointer}
+  .items input{width:18px;height:18px;margin:0;accent-color:var(--traco)}
+  .items .p{font-variant-numeric:tabular-nums;color:var(--sub);font-size:.95rem}
+  .items li:has(input:checked){background-image:repeating-linear-gradient(-45deg, color-mix(in srgb,var(--mar) 30%,transparent) 0 2px, transparent 2px 9px)}
+  .items li:has(input:checked) .p{color:var(--traco)}
+  .plan{margin-top:18px;border:1px dashed var(--sub);padding:12px 14px}
+  .plan .ttl{font-size:.85rem;color:var(--sub);margin:0 0 4px}
+  .layer{display:grid;grid-template-columns:9.5em 1fr;gap:12px;padding:6px 0;border-top:1px dotted var(--linha);font-size:.92rem}
+  .plan .ttl + .layer{border-top:0}
+  .layer > span{color:var(--sub)}
+  .nodes{display:flex;flex-wrap:wrap;gap:4px 14px}
+  .node.on{color:var(--traco);font-weight:700}
+  .node.ghost{color:#5d6d97}
+  .total{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--traco);margin-top:18px;padding-top:12px;gap:12px;flex-wrap:wrap}
+  .total .lbl{font-size:.95rem;color:var(--sub)}
+  .total .val{font:700 2rem var(--slab);font-variant-numeric:tabular-nums}
+  .fine{font-size:.82rem;color:var(--sub);margin:12px 0 0}
+
+  .btn{display:inline-block;border:2px solid var(--traco);color:var(--traco);font-weight:700;text-decoration:none;padding:14px 26px;border-radius:6px;text-align:center}
+  .btn.hatch{background-color:transparent}
+  .btn:hover{background:var(--traco);color:var(--noite)}
+  .send{display:block;margin-top:16px}
+  .send[aria-disabled="true"]{border-color:var(--linha);color:#5d6d97;background:none;pointer-events:none}
+
+  /* projetos */
+  .work{padding:40px 0 20px}
+  .work > h2{margin-bottom:8px}
+  .work > .lead{color:var(--sub);margin:0 0 30px;max-width:34em}
+  .proj{display:grid;grid-template-columns:260px 1fr;gap:56px;align-items:center;padding:56px 0;border-top:1px solid var(--linha)}
+  .proj .art svg{width:100%;height:auto}
+  .proj h3{font:700 clamp(1.7rem,3vw,2.3rem)/1.1 var(--slab);margin:0 0 4px}
+  .proj .meta{color:var(--mar);font-weight:700;margin:0 0 12px}
+  .proj p{margin:0 0 12px;color:var(--sub);max-width:34em}
+  .proj p b{color:var(--texto);font-weight:500}
+  .proj .links{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
+  .more{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;padding:48px 0 0;border-top:1px solid var(--linha)}
+  .more h4{font:700 1.25rem var(--slab);margin:0 0 6px}
+  .more p{margin:0 0 8px;color:var(--sub);font-size:.95rem}
+
+  /* processo, sobre, contato */
+  .band-sec{padding:90px 0;border-top:1px solid var(--linha)}
+  .steps{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;counter-reset:s}
+  .steps li{counter-increment:s}
+  .steps li::before{content:counter(s);display:grid;place-items:center;width:42px;height:42px;border:2px solid var(--traco);border-radius:50%;font:700 1.1rem var(--slab);color:var(--traco);margin-bottom:14px;box-shadow:4px 4px 0 var(--mar)}
+  .steps h3{font:700 1.2rem var(--slab);margin:0 0 6px}
+  .steps p{margin:0;color:var(--sub)}
+  .about{display:grid;grid-template-columns:1.3fr 1fr;gap:60px}
+  .about p{color:var(--sub);margin:0 0 14px;max-width:36em}
+  .about p strong{color:var(--texto);font-weight:500}
+  .contact{text-align:center;padding:100px 0 110px;border-top:1px solid var(--linha)}
+  .contact h2{font-size:clamp(2.3rem,5.4vw,3.9rem);font-weight:400;max-width:14em;margin:0 auto 30px}
+  .contact h2 b{font-weight:700}
+  .contact .row{display:flex;flex-wrap:wrap;gap:18px 30px;justify-content:center;align-items:center}
+  footer{border-top:1px solid var(--linha);padding:24px 0 40px;color:var(--sub);font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer a{color:var(--sub)}
+
+  @media (max-width:900px){
+    .builder-wrap,.about{grid-template-columns:1fr;gap:32px}
+    .proj{grid-template-columns:1fr;gap:24px}
+    .proj .art{max-width:240px}
+    .more{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .top nav a:not(.hire){display:none}
+  }
+  @media (max-width:520px){
+    body{font-size:17px}
+    .steps{grid-template-columns:1fr}
+    .layer{grid-template-columns:1fr;gap:2px}
+    .builder{padding:18px;box-shadow:5px 5px 0 color-mix(in srgb,var(--mar) 55%,transparent)}
+  }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">
+      <svg class="ill" viewBox="0 0 220 280" aria-hidden="true"><g class="fill"><path d="M58 46 C 34 58, 40 120, 70 170 C 84 192, 136 192, 150 170 C 180 120, 186 58, 162 46 C 134 34, 86 34, 58 46 Z"/><path d="M92 186 C 62 196, 58 240, 90 254 C 114 264, 140 252, 138 232 C 136 220, 124 216, 116 222 C 106 214, 112 200, 128 190 C 116 194, 102 192, 92 186 Z"/></g><path class="line" style="stroke-width:12" d="M58 46 C 34 58, 40 120, 70 170 C 84 192, 136 192, 150 170 C 180 120, 186 58, 162 46 C 134 34, 86 34, 58 46 Z M92 186 C 62 196, 58 240, 90 254 C 114 264, 140 252, 138 232 C 136 220, 124 216, 116 222 C 106 214, 112 200, 128 190"/></svg>
+      Túlio Barbosa
+    </a>
+    <nav aria-label="Principal">
+      <a href="#trabalhos">Trabalhos</a>
+      <a href="#processo">Como trabalho</a>
+      <a href="#sobre">Sobre</a>
+      <a class="hire" href="#monte">
+        <svg class="ill" viewBox="0 0 32 32" aria-hidden="true"><path class="fill" d="M6 6h20v14H14l-6 5v-5H6z"/><path class="line" d="M6 6h20v14H14l-6 5v-5H6z"/></svg>
+        Orçamento
+      </a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="stage">
+      <div class="band hatch" aria-hidden="true"></div>
+      <!-- caju desenhado em traço, com código dentro -->
+      <svg class="ill" viewBox="0 0 220 280" role="img" aria-label="Ilustração de um caju com sinais de código">
+        <g class="fill">
+          <path d="M58 46 C 34 58, 40 120, 70 170 C 84 192, 136 192, 150 170 C 180 120, 186 58, 162 46 C 134 34, 86 34, 58 46 Z"/>
+          <path d="M92 186 C 62 196, 58 240, 90 254 C 114 264, 140 252, 138 232 C 136 220, 124 216, 116 222 C 106 214, 112 200, 128 190 C 116 194, 102 192, 92 186 Z"/>
+        </g>
+        <path class="line" d="M58 46 C 34 58, 40 120, 70 170 C 84 192, 136 192, 150 170 C 180 120, 186 58, 162 46 C 134 34, 86 34, 58 46 Z"/>
+        <path class="line" d="M92 186 C 62 196, 58 240, 90 254 C 114 264, 140 252, 138 232 C 136 220, 124 216, 116 222 C 106 214, 112 200, 128 190"/>
+        <path class="line" d="M110 38 C 108 24, 112 14, 120 6 M114 26 C 126 14, 146 12, 160 18 C 146 32, 128 34, 114 26 Z"/>
+        <path class="line" d="M88 92 l-20 22 l20 22 M132 92 l20 22 l-20 22 M120 84 l-22 62"/>
+        <path class="line" d="M68 66 C 72 58, 80 54, 90 52"/>
+      </svg>
+    </div>
+    <h1>Me conta o problema<span class="dot">.</span><br><b>Eu monto o sistema<span class="dot">.</span></b></h1>
+    <p class="intro">Sou o Túlio, desenvolvedor full stack. Faço sites, sistemas com login e painel, e automações para quem quer parar de perder tempo com planilha, papel e WhatsApp desorganizado. O portal que construí <strong>está em produção na SERGAS</strong>.</p>
+  </section>
+
+  <section class="builder-wrap" id="monte" aria-labelledby="b-title">
+    <div>
+      <h2 id="b-title">Monte o seu sistema<span class="dot">.</span></h2>
+      <p class="lead">Marque o que o seu negócio precisa. A planta do sistema e a estimativa de preço e prazo aparecem na hora, e você me manda o pedido pronto pelo WhatsApp.</p>
+      <p class="lead">Os valores são “a partir de”. O preço final sai numa proposta por escrito, depois de uma conversa sobre o seu caso.</p>
+    </div>
+    <div class="builder">
+      <ul class="items" id="items"></ul>
+      <div class="plan" aria-live="polite">
+        <p class="ttl">Planta do sistema</p>
+        <div class="layer"><span>O que o cliente vê</span><div class="nodes" data-layer="tela"></div></div>
+        <div class="layer"><span>O que o sistema faz</span><div class="nodes" data-layer="regra"></div></div>
+        <div class="layer"><span>Onde ficam os dados</span><div class="nodes" data-layer="dados"></div></div>
+        <div class="layer"><span>O que roda sozinho</span><div class="nodes" data-layer="auto"></div></div>
+      </div>
+      <div class="total"><span class="lbl" id="prazo">Estimativa inicial</span><span class="val" id="val">R$ 0</span></div>
+      <a class="btn hatch send" id="send" href="#" aria-disabled="true" target="_blank" rel="noopener">Enviar este pedido no WhatsApp</a>
+    </div>
+  </section>
+
+  <main>
+  <section class="work" id="trabalhos">
+    <h2>Trabalhos<span class="dot">.</span></h2>
+    <p class="lead">Sistemas que já resolvem problemas de verdade, para empresas, ONGs e comércio.</p>
+
+    <article class="proj">
+      <div class="art">
+        <svg class="ill" viewBox="0 0 240 190" role="img" aria-label="Ilustração de um painel de chamados">
+          <rect class="fill" x="20" y="22" width="190" height="140" rx="8"/>
+          <rect class="line" x="20" y="22" width="190" height="140" rx="8"/>
+          <path class="line" d="M20 46h190 M34 34h0 M46 34h0 M58 34h0"/>
+          <path class="line" d="M38 72h12 M62 72h110 M38 100h12 M62 100h90 M38 128h12 M62 128h120"/>
+          <path class="line" d="M38 72l4 4 8-8 M38 100l4 4 8-8"/>
+          <circle class="line" cx="196" cy="160" r="20"/><path class="line" d="M188 160l6 6 11-12"/>
+        </svg>
+      </div>
+      <div>
+        <h3>Portal de Chamados da SERGAS<span class="dot">.</span></h3>
+        <p class="meta">Em produção na Sergipe Gás</p>
+        <p>Os colaboradores dependiam de uma ferramenta técnica e confusa para pedir suporte de TI, ERP e manutenção. Construí um portal simples, com <b>login do Microsoft 365</b>, painéis para técnicos e administradores e <b>relatórios em PDF</b>.</p>
+        <p>Entrou em produção na empresa. Também fui o gerente do projeto e Scrum Master do time.</p>
+        <div class="links"><a class="btn hatch" href="https://github.com/tulio1057/zammad-bff" target="_blank" rel="noopener">Ver o código</a></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="art">
+        <svg class="ill" viewBox="0 0 240 190" role="img" aria-label="Ilustração de uma fachada de loja com um troféu">
+          <path class="fill" d="M30 70h150v100H30z"/>
+          <path class="line" d="M30 70h150v100H30z M22 70l14-34h138l14 34 M22 70h166"/>
+          <path class="line" d="M50 36l-8 34 M78 36l-4 34 M106 36v34 M134 36l4 34 M162 36l8 34"/>
+          <path class="line" d="M46 170v-58h40v58 M104 100h60v40h-60z"/>
+          <path class="fill" d="M190 104h34v26c0 12-8 20-17 20s-17-8-17-20z"/>
+          <path class="line" d="M190 104h34v26c0 12-8 20-17 20s-17-8-17-20z M207 150v14 M196 166h22 M190 112h-8c0 10 4 14 8 14 M224 112h8c0 10-4 14-8 14"/>
+          <path class="line" d="M203 118l6-4v20"/>
+        </svg>
+      </div>
+      <div>
+        <h3>Centroaju<span class="dot">.</span></h3>
+        <p class="meta">3º lugar no CentroLab Hackathon</p>
+        <p>As lojas do Centro de Aracaju têm pouca presença online. Criei uma vitrine com <b>lojas, produtos e carrinho</b>, agenda de eventos, cultura e pontos para quem visita o Centro.</p>
+        <p>O projeto ficou em 3º lugar no hackathon.</p>
+        <div class="links"><a class="btn hatch" href="https://centroaju01.vercel.app" target="_blank" rel="noopener">Abrir o site</a><a class="btn" href="https://github.com/tulio1057/centroaju01" target="_blank" rel="noopener">Ver o código</a></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="art">
+        <svg class="ill" viewBox="0 0 240 190" role="img" aria-label="Ilustração de uma gota d'água com um coração">
+          <path class="fill" d="M120 18 C 92 62, 66 92, 66 122 C 66 152, 90 174, 120 174 C 150 174, 174 152, 174 122 C 174 92, 148 62, 120 18 Z"/>
+          <path class="line" d="M120 18 C 92 62, 66 92, 66 122 C 66 152, 90 174, 120 174 C 150 174, 174 152, 174 122 C 174 92, 148 62, 120 18 Z"/>
+          <path class="line" d="M120 150 C 96 132, 92 118, 98 108 C 104 98, 116 100, 120 110 C 124 100, 136 98, 142 108 C 148 118, 144 132, 120 150 Z"/>
+          <path class="line" d="M84 120 C 84 104, 92 90, 100 80"/>
+        </svg>
+      </div>
+      <div>
+        <h3>Instituto Fonte das Águas<span class="dot">.</span></h3>
+        <p class="meta">Trabalho voluntário para uma ONG</p>
+        <p>Uma ONG do Bairro Industrial precisava mostrar seus projetos e receber ajuda. Fiz um site com os 11 projetos, <b>cadastro de voluntários</b> em etapas e <b>doação por PIX com QR Code</b>.</p>
+        <p>O site está no ar e qualquer pessoa pode doar ou se voluntariar pelo celular.</p>
+        <div class="links"><a class="btn hatch" href="https://instituto-fonte-das-aguas.vercel.app" target="_blank" rel="noopener">Abrir o site</a><a class="btn" href="https://github.com/tulio1057/instituto-fonte-das-aguas" target="_blank" rel="noopener">Ver o código</a></div>
+      </div>
+    </article>
+
+    <div class="more">
+      <div><h4>Agendamento de espaços<span class="dot">.</span></h4><p>Reservas de salas com agenda, perfis de acesso e bloqueio automático de horários em conflito.</p><a href="https://sistema-gerenciamento-espacos.vercel.app" target="_blank" rel="noopener">Abrir o sistema</a></div>
+      <div><h4>Caixa para mercado<span class="dot">.</span></h4><p>Frente de caixa, estoque, fechamento e cupom em PDF, para computador.</p><a href="https://github.com/tulio1057/PDVMercado" target="_blank" rel="noopener">Ver o código</a></div>
+      <div><h4>Rádio para academia<span class="dot">.</span></h4><p>Player de música para a recepção, com uma automação em Python que publica as faixas sozinha.</p><a href="https://github.com/tulio1057/radio-academia" target="_blank" rel="noopener">Ver o código</a></div>
+    </div>
+  </section>
+
+  <section class="band-sec" id="processo">
+    <h2>Como trabalho<span class="dot">.</span></h2>
+    <ol class="steps">
+      <li><h3>Conversa</h3><p>Entendo o seu negócio e o que está travando o seu dia a dia.</p></li>
+      <li><h3>Proposta por escrito</h3><p>Escopo, prazo e valor fechados antes de começar.</p></li>
+      <li><h3>Entregas parciais</h3><p>Você testa versões no caminho e pede ajustes cedo.</p></li>
+      <li><h3>No ar e com suporte</h3><p>Publico, ensino a usar e acompanho depois da entrega.</p></li>
+    </ol>
+  </section>
+
+  <section class="band-sec about" id="sobre">
+    <div>
+      <h2>Quem vai construir<span class="dot">.</span></h2>
+      <p>Na SERGAS, desenvolvi como bolsista o portal de chamados que a empresa usa hoje e conduzi o time como Scrum Master. Me formei Desenvolvedor Full Stack pelo programa Jovem Tech (InovaSE e Prefeitura de Aracaju), e com o Centroaju fiquei em <strong>3º lugar no CentroLab Hackathon</strong>.</p>
+      <p>Também já automatizei coisas fora da tela: no IFAL, desenvolvi um sistema que <strong>fecha válvulas sozinho quando sensores detectam gás ou fumaça</strong>, apresentado em Brasília na Semana Nacional da Educação Profissional e Tecnológica.</p>
+    </div>
+    <div>
+      <h2>Ferramentas<span class="dot">.</span></h2>
+      <p>React, Next.js, TypeScript, Node.js, Express, PostgreSQL, MongoDB, Firebase, Supabase, Python, C# e .NET, Arduino e ESP32.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contato">
+    <h2>Qual problema a gente <b>resolve primeiro</b><span class="dot">?</span></h2>
+    <div class="row">
+      <a class="btn hatch" id="wa" href="#" target="_blank" rel="noopener">Conversar no WhatsApp</a>
+      <a href="mailto:tulioj.dev@gmail.com">tulioj.dev@gmail.com</a>
+    </div>
+  </section>
+  </main>
+</div>
+
+<footer><div class="wrap"><span>Túlio José Ferreira Barbosa, Aracaju/SE</span><span><a href="https://github.com/tulio1057">GitHub</a> &nbsp; <a href="https://www.linkedin.com/in/t%C3%BAlio-jos%C3%A9-ferreira-barbosa-b02a32450/">LinkedIn</a></span></div></footer>
+
+<script>
+  const PHONE = "5512997739314";
+  const M = {
+    landing:   {nome:"Página única de divulgação", min:500,  dias:5,  nos:{tela:["Página de divulgação"]}},
+    site:      {nome:"Site com várias páginas",    min:1500, dias:12, nos:{tela:["Início","Sobre","Serviços","Contato"]}},
+    agenda:    {nome:"Agendamento online",         min:1200, dias:10, nos:{tela:["Agenda"],regra:["Horários livres","Confirmação"],dados:["Agendamentos"]}},
+    pedidos:   {nome:"Catálogo e pedidos",         min:1500, dias:12, nos:{tela:["Catálogo","Carrinho"],regra:["Pedidos"],dados:["Produtos","Pedidos"]}},
+    painel:    {nome:"Login e painel de gestão",   min:1500, dias:12, nos:{tela:["Painel"],regra:["Login","Permissões"],dados:["Usuários"]}},
+    relatorios:{nome:"Relatórios em PDF",          min:500,  dias:4,  nos:{regra:["Relatórios"],auto:["PDF"]}},
+    planilha:  {nome:"Automatizar planilhas",      min:400,  dias:4,  nos:{auto:["Importa planilha","Rotina diária"]}},
+    whats:     {nome:"Atendimento pelo WhatsApp",  min:100,  dias:1,  nos:{tela:["Botão WhatsApp"],auto:["Mensagem pronta"]}},
+  };
+  const brl = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  const waLink = txt => `https://wa.me/${PHONE}?text=${encodeURIComponent(txt)}`;
+  const ghosts = {tela:"telas", regra:"regras do negócio", dados:"banco de dados", auto:"automações"};
+  const sel = new Set(), layers = {};
+  document.querySelectorAll('[data-layer]').forEach(n=>layers[n.dataset.layer]=n);
+  document.getElementById('items').innerHTML = Object.entries(M).map(([id,m])=>
+    `<li><label><input type="checkbox" value="${id}"><span>${m.nome}</span><span class="p">${id==='landing'||id==='site'?'':'+'}${brl(m.min)}</span></label></li>`).join('');
+  const val=document.getElementById('val'), prazo=document.getElementById('prazo'), send=document.getElementById('send');
+  document.getElementById('wa').href = waLink("Olá, Túlio! Vi seu site e quero conversar sobre um projeto.");
+
+  function render(added){
+    const shown={tela:[],regra:[],dados:[],auto:[]};
+    sel.forEach(id=>Object.entries(M[id].nos).forEach(([l,a])=>a.forEach(n=>{if(!shown[l].includes(n))shown[l].push(n)})));
+    Object.entries(layers).forEach(([l,el])=>{
+      const fresh = added?(M[added].nos[l]||[]):[];
+      el.innerHTML = shown[l].length ? shown[l].map(n=>`<span class="node${fresh.includes(n)?' on':''}">${n}</span>`).join('') : `<span class="node ghost">${ghosts[l]}</span>`;
+    });
+    if(!sel.size){ val.textContent='R$ 0'; prazo.textContent='Estimativa inicial'; send.setAttribute('aria-disabled','true'); send.href='#'; return; }
+    let min=0,dias=0; sel.forEach(id=>{min+=M[id].min;dias+=M[id].dias});
+    const sem=Math.max(1,Math.ceil(dias/5));
+    val.textContent='a partir de '+brl(min);
+    prazo.textContent=`Estimativa inicial, cerca de ${sem} ${sem>1?'semanas':'semana'}`;
+    const itens=[...sel].map(id=>'- '+M[id].nome).join('\n');
+    send.href=waLink(`Olá, Túlio! Montei um pedido no seu site:\n${itens}\nEstimativa: a partir de ${brl(min)}. Podemos conversar?`);
+    send.setAttribute('aria-disabled','false');
+  }
+  document.getElementById('items').addEventListener('change',e=>{
+    const id=e.target.value; e.target.checked?sel.add(id):sel.delete(id); render(e.target.checked?id:null);
+  });
+  render(null);
+</script>
+</body>
+</html>
